@@ -7,18 +7,20 @@ SAVE_DIR = os.path.join(BASE_DIR, "zenodo")
 os.makedirs(SAVE_DIR, exist_ok=True)
 
 urls = [
-    "https://zenodo.org/records/15968495/files/avg_item.tsv",
-    "https://zenodo.org/records/15968495/files/avg_user.tsv",
-    "https://zenodo.org/records/15968495/files/avg_query.tsv",
-    "https://zenodo.org/records/15968495/files/cross_user.tsv",
-    "https://zenodo.org/records/15968495/files/cross_query.tsv",
-    "https://zenodo.org/records/15968495/files/cross_item.tsv",
+    "https://zenodo.org/records/15968495/files/avg_item.tsv?download=1",
+    "https://zenodo.org/records/15968495/files/avg_user.tsv?download=1",
+    "https://zenodo.org/records/15968495/files/avg_query.tsv?download=1",
+    "https://zenodo.org/records/15968495/files/cross_user.tsv?download=1",
+    "https://zenodo.org/records/15968495/files/cross_query.tsv?download=1",
+    "https://zenodo.org/records/15968495/files/cross_item.tsv?download=1",
+    "https://zenodo.org/records/15968495/files/README.md?download=1"
 ]
 
 headers = {"User-Agent": "Mozilla/5.0"}
 
 for url in urls:
-    filename = url.split("/")[-1]
+    filename = url.split("/")[-1].split("?")[0]
+
     filepath = os.path.join(SAVE_DIR, filename)
 
     if os.path.exists(filepath):
