@@ -2,7 +2,7 @@ import os
 import requests
 
 BASE_DIR = os.path.dirname(__file__)
-SAVE_DIR = os.path.join(BASE_DIR, "zenodo-1")
+SAVE_DIR = os.path.join(BASE_DIR, "zenodo")
 os.makedirs(SAVE_DIR, exist_ok=True)
 
 urls = [
