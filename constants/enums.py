@@ -1,12 +1,12 @@
-from enum import StrEnum, auto, Enum
+from enum import Enum
 
 from algorithms.alg import *
 
 
-class DatasetsEnum(StrEnum):
-    amazon23office = auto()
-    deezermarch = auto()
-
+class DatasetsEnum(str, Enum):
+    amazon23office = "amazon23office"
+    zenodo = "zenodo"
+    deezermarch = "deezermarch"
 
 class AlgorithmsEnum(Enum):
     avgmatching = AverageQueryMatching

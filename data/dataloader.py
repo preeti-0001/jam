@@ -5,6 +5,16 @@ from torch.utils.data import DataLoader
 from data.dataset import TrainQueryDataset, collate_fn_negative_sampling, EvalQueryDataset
 
 
+class CollateFn:
+    def __init__(self, query2itemsSet, n_items, n_negs):
+        self.query2itemsSet = query2itemsSet
+        self.n_items = n_items
+        self.n_negs = n_negs
+
+    def __call__(self, batch):
+        return collate_fn_negative_sampling(batch, self.query2itemsSet, self.n_items, n_negs=self.n_negs)
+
+
 def get_dataloader(conf: dict, split_set: str) -> DataLoader:
     """
         Returns the dataloader associated to the configuration in conf
@@ -19,8 +29,8 @@ def get_dataloader(conf: dict, split_set: str) -> DataLoader:
                 batch_size=conf['train_batch_size'],
                 shuffle=True,
                 num_workers=conf['running_settings']['train_n_workers'],
-                collate_fn=lambda batch: collate_fn_negative_sampling(
-                    batch, train_dataset.query2itemsSet,
+                collate_fn=CollateFn(
+                    train_dataset.query2itemsSet,
                     train_dataset.n_items,
                     n_negs=conf['neg_train']
                 )

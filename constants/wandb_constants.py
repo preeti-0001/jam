@@ -1,2 +1,2 @@
-PROJECT_NAME = '<your-project-name>'
-ENTITY_NAME = '<your-entity-name>'
+PROJECT_NAME = 'jam'
+ENTITY_NAME = 'preeti-msor25-defence-institute-of-advanced-technology'

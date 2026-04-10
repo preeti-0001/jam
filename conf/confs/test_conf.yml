@@ -2,7 +2,7 @@ data_path: "./data"
 
 d: 128
 
-n_epochs: 20
+n_epochs: 5
 
 lr: 0.003
 wd: 0.01

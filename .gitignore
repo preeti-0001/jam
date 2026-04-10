@@ -1,2 +1,7 @@
-./saved_models
-./wandb
+saved_models
+wandb/*
+*/zenodo/*
+*.pyc
+.env
+.vscode/*
+.venv/*
