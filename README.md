@@ -33,7 +33,7 @@ This project focuses on implementing and understanding the JAM architecture, whi
 The model generates personalized recommendations based on user ID and query.
 Different users receive similar items but in different ranking orders, indicating user-specific preference modeling.
 <div align="center">
-    <img src="./assets/output.png" style="width: 320px" />
+    <img src="./assets/output.png" style="width: 100%" />
 </div>
 
 
