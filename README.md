@@ -7,17 +7,17 @@ https://arxiv.org/pdf/2507.15826
 
 ### Research Question. 
 
-- How to efficiently integrate natural language interfaces into music recommender pipelines with multimodal item representations and short- & long-term user preferences? 
-    JAM uses both user query (text) and user history to recommend songs.
-    It improves recommendations by understanding:
-        what the user wants now (query)
-        what the user likes overall (history)
+##### How to efficiently integrate natural language interfaces into music recommender pipelines with multimodal item representations and short- & long-term user preferences?
+JAM uses both user query (text) and user history to recommend songs.
+It improves recommendations by understanding:
+- what the user wants now (query)
+- what the user likes overall (user history)
 
-- Which strategies most effectively aggregate such multimodal item data?
-    It combines different types of song data like:
-        audio
-        lyrics
-        metadata
+##### Which strategies most effectively aggregate such multimodal item data?<
+It combines different types of song data like:
+- audio
+- lyrics
+- metadata
 
 This approach can be used in personalized music apps, AI assistants for recommendations, any system where users search with natural language
 
@@ -57,11 +57,13 @@ This project focuses on implementing and understanding the JAM architecture, whi
 ## Output
 The model generates personalized recommendations based on user ID and query.
 Different users receive similar items but in different ranking orders, indicating user-specific preference modeling.
+
 <div align="center">
     <img src="./assets/output.png" style="width: 100%" />
 </div>
-```
-python .\run_implementation.py -p saved_models\avgmatching-zenodo\single_runs\twenty_epoches
+
+```bash
+python ./run_implementation.py -p saved_models/avgmatching-zenodo/single_runs/twenty_epoches
 Reading file as Yaml...
  --- Configuration Loaded ---
 Welcome to the JAM Recommender! Type your music query below. Type -1 as user ID to exit.
