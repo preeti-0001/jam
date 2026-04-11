@@ -5,7 +5,23 @@ It reproduces the research paper:
 **Just Ask for Music (JAM): Multimodal and Personalized Natural Language Music Recommendation**  
 https://arxiv.org/pdf/2507.15826
 
-## Citation
+### Research Question. 
+
+- How to efficiently integrate natural language interfaces into music recommender pipelines with multimodal item representations and short- & long-term user preferences? 
+    JAM uses both user query (text) and user history to recommend songs.
+    It improves recommendations by understanding:
+        what the user wants now (query)
+        what the user likes overall (history)
+
+- Which strategies most effectively aggregate such multimodal item data?
+    It combines different types of song data like:
+        audio
+        lyrics
+        metadata
+
+This approach can be used in personalized music apps, AI assistants for recommendations, any system where users search with natural language
+
+### Citation
 ```bibtex
 @inproceedings{melchiorre2025jam,
   title     = {Just Ask for Music (JAM): Multimodal and Personalized Natural Language Music Recommendation},
@@ -17,6 +33,15 @@ https://arxiv.org/pdf/2507.15826
   publisher = {ACM},
 }
 ```
+
+### Key Learnings
+
+- Combining user query (current intent) with user history improves recommendation relevance  
+- Joint embeddings of user, query, and item enable personalized ranking instead of generic results  
+- The model often re-ranks similar items per user rather than generating completely different recommendations  
+- Input preprocessing (e.g., casing, text normalization) affects embedding quality and consistency  
+- Multimodal features (audio, metadata, etc.) help enrich item representation  
+- End-to-end pipeline (data → training → inference) is crucial for practical recommender systems  
 
 ## Overview
 This project focuses on implementing and understanding the JAM architecture, which learns joint representations of queries, users, and items for improved recommendation performance.
@@ -35,13 +60,28 @@ Different users receive similar items but in different ranking orders, indicatin
 <div align="center">
     <img src="./assets/output.png" style="width: 100%" />
 </div>
+```
+python .\run_implementation.py -p saved_models\avgmatching-zenodo\single_runs\twenty_epoches
+Reading file as Yaml...
+ --- Configuration Loaded ---
+Welcome to the JAM Recommender! Type your music query below. Type -1 as user ID to exit.
+Enter your user ID: 0
+Enter your music query: Sad piano music
+[41564, 35801, 71259, 9220, 35802]
+Enter your user ID: 1
+Enter your music query: Sad Piano Music
+[41564, 35801, 35802, 71259, 9220]
+Enter your user ID: 0
+Enter your music query: sad piano music
+[41564, 35801, 71259, 9220, 35802]
+Enter your user ID: 1
+Enter your music query: sAd PiAnO Music
+[41564, 35801, 35802, 71259, 9220]
+Enter your user ID: -1
+Bye
+```
 
 
-## Key Learnings
-
-- Importance of joint query-user-item embeddings in recommendation systems
-- Effect of preprocessing (e.g., casing) on embedding-based models
-- Difference between candidate generation and personalized ranking
 
 ## Installation & Setup
 
@@ -110,7 +150,7 @@ running_settings:
 ```
 then run
 `python run_experiment.py -a avgmatching -d zenodo -c conf/confs/test_conf.yml`
-``
+
 (if `-t` is not specified, it will run `train/val/test`)
 
 ### Codebase Structure
