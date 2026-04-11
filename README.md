@@ -1,5 +1,7 @@
-# Introduction
-Implementaion of Research paper:
+# JAM Music Recommender (Research Implementation)
+Implements JAM (Just Ask for Music), a multimodal music recommender that generates personalized recommendations using natural language queries and user history.
+
+This project reproduces the research paper:
 **Just Ask for Music (JAM): Multimodal and Personalized Natural Language Music Recommendation**  
 https://arxiv.org/pdf/2507.15826
 
@@ -36,7 +38,8 @@ This repository is forked from: https://github.com/hcai-mms/jam
 ```
 
 ### Key Learnings
-
+- Reproduced the JAM model locally from the research paper 
+- Understood by implementation the query-item matching mechanism 
 - Combining user query (current intent) with user history improves recommendation relevance  
 - Joint embeddings of user, query, and item enable personalized ranking instead of generic results  
 - The model often re-ranks similar items per user rather than generating completely different recommendations  
@@ -48,10 +51,7 @@ This repository is forked from: https://github.com/hcai-mms/jam
 This project focuses on implementing and understanding the JAM architecture, which learns joint representations of queries, users, and items for improved recommendation performance.
 
 ## My Contributions
-- Reproduced the JAM model locally from the research paper 
-- Understood the query-item matching mechanism 
-- Used Virtual Environment instead for dependency management
-- Set up training and evaluation pipeline 
+- Set up end-to-end pipeline for preprocessing, training, evaluation, and inference
 - Added scripts to fetch, preprocess, split training data with `python run_preprocess.py` 
 - Used the trained model to generate song recommendations for user queries with `python run_implementation.py -p <path_to_model_folder>`
 
@@ -86,12 +86,13 @@ Bye
 
 ## Pipeline
 
-```bibtex
+```
 User Query → Text Encoder → Query Embedding  (Q)
+
 User History → User Embedding (U)
 Songs → Multimodal Features → Item Embedding  (T)
 
-(U, Q, T) → JAM Model → Score → Relevance Score → Top-K Recommendations
+(U, Q, T) → JAM Model → Relevance Score → Top-K Recommendations
 
 ```
 
@@ -165,7 +166,7 @@ then run
 
 (if `-t` is not specified, it will run `train/val/test`)
 
-### Codebase Structure
+## Codebase Structure
 ```
 .
 ├── algorithms                  <- Classes about Query-User-Item Matching
@@ -180,8 +181,12 @@ then run
 ├── sweep_agent.py              <- Same as experiment_helper but for train_val and when launching sweeps.
 ├── run_preprocess.py           <- Fetch, pre-process and split training data.
 ├── run_implementation.py       <- Use trained model to generate playlist for user.
-└── run_experiment.py           <- Entry point to the code.
-├── run_test_sweep.py           <- Same as experiment_helper but for test results over a sweep.
+├── run_experiment.py           <- Entry point to the code.
+└── run_test_sweep.py           <- Same as experiment_helper but for test results over a sweep.
 ```
+
+#Limitation
+- Model depends on quality of pretrained embeddings  
+- Recommendations limited by dataset coverage
 
 # Original Repository Documentation ([Reference](https://github.com/hcai-mms/jam/blob/master/README.md))
