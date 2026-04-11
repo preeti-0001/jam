@@ -1,7 +1,5 @@
 # Introduction
-This repository is forked from: https://github.com/hcai-mms/jam
-
-It reproduces the research paper:
+Implementaion of Research paper:
 **Just Ask for Music (JAM): Multimodal and Personalized Natural Language Music Recommendation**  
 https://arxiv.org/pdf/2507.15826
 
@@ -13,14 +11,17 @@ It improves recommendations by understanding:
 - what the user wants now (query)
 - what the user likes overall (user history)
 
-##### Which strategies most effectively aggregate such multimodal item data?<
+##### Which strategies most effectively aggregate such multimodal item data?
 It combines different types of song data like:
 - audio
 - lyrics
 - metadata
 
-This approach can be used in personalized music apps, AI assistants for recommendations, any system where users search with natural language
+This approach enables more accurate recommendations in systems where users express intent in natural language. 
 
+Unlike traditional recommenders, this system captures both short-term intent (query) and long-term preferences (user history) for more personalized results.
+
+This repository is forked from: https://github.com/hcai-mms/jam
 ### Citation
 ```bibtex
 @inproceedings{melchiorre2025jam,
@@ -55,7 +56,7 @@ This project focuses on implementing and understanding the JAM architecture, whi
 - Used the trained model to generate song recommendations for user queries with `python run_implementation.py -p <path_to_model_folder>`
 
 ## Output
-The model generates personalized recommendations based on user ID and query.
+The model generates top-K personalized recommendation song IDs (ranked by relevance) based on user ID and query.
 Different users receive similar items but in different ranking orders, indicating user-specific preference modeling.
 
 <div align="center">
@@ -83,7 +84,16 @@ Enter your user ID: -1
 Bye
 ```
 
+## Pipeline
 
+```bibtex
+User Query → Text Encoder → Query Embedding  (Q)
+User History → User Embedding (U)
+Songs → Multimodal Features → Item Embedding  (T)
+
+(U, Q, T) → JAM Model → Score → Relevance Score → Top-K Recommendations
+
+```
 
 ## Installation & Setup
 
