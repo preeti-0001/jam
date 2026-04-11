@@ -37,6 +37,8 @@ This repository is forked from: https://github.com/hcai-mms/jam
 }
 ```
 
+This project focuses on implementing and understanding the JAM architecture, which learns joint representations of queries, users, and items for improved recommendation performance.
+
 ### Key Learnings
 - Reproduced the JAM model locally from the research paper 
 - Understood by implementation the query-item matching mechanism 
@@ -46,9 +48,6 @@ This repository is forked from: https://github.com/hcai-mms/jam
 - Input preprocessing (e.g., casing, text normalization) affects embedding quality and consistency  
 - Multimodal features (audio, metadata, etc.) help enrich item representation  
 - End-to-end pipeline (data → training → inference) is crucial for practical recommender systems  
-
-## Overview
-This project focuses on implementing and understanding the JAM architecture, which learns joint representations of queries, users, and items for improved recommendation performance.
 
 ## My Contributions
 - Set up end-to-end pipeline for preprocessing, training, evaluation, and inference
@@ -185,7 +184,7 @@ then run
 └── run_test_sweep.py           <- Same as experiment_helper but for test results over a sweep.
 ```
 
-#Limitation
+# Limitation
 - Model depends on quality of pretrained embeddings  
 - Recommendations limited by dataset coverage
 
