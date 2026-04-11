@@ -54,7 +54,7 @@ class FeatureHolder:
 
 
 if __name__ == '__main__':
-    fh = FeatureHolder('./amazon23office/processed')
+    fh = FeatureHolder('./zenodo/processed')
     print(fh.user_features)
     print(fh.item_features)
     print(fh.n_user_features)

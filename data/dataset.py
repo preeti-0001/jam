@@ -215,7 +215,7 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     logging.info('Starting')
 
-    data_path = './amazon23office/processed'
+    data_path = './data/zenodo'
 
     lang_model_conf = {
         'tokenizer_name': 'answerdotai/ModernBERT-base',

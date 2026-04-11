@@ -1,3 +1,38 @@
+# Introduction
+
+This repository is forked from: https://github.com/hcai-mms/jam
+
+## Citation
+It reproduces the research paper:
+```bibtex
+@inproceedings{melchiorre2025jam,
+  title     = {Just Ask for Music (JAM): Multimodal and Personalized Natural Language Music Recommendation},
+  author    = {Alessandro B. Melchiorre and Elena V. Epure and Shahed Masoudian and Gustavo Escobedo and Anna Hausberger and Manuel Moussallam and Markus Schedl},
+  booktitle = {Proceedings of the 19th ACM Conference on Recommender Systems (RecSys)},
+  year      = {2025},
+  address   = {Prague, Czhech Republic},
+  note      = {Short Paper},
+  publisher = {ACM},
+}
+```
+
+## Overview
+This project focuses on implementing and understanding the JAM architecture, which learns joint representations of queries, users, and items for improved recommendation performance.
+
+## My Contributions
+- Reproduced the JAM model locally from the research paper 
+- Understood the query-item matching mechanism 
+- Used Virtual Environment instaed of Conda
+- Set up training and evaluation pipeline 
+- Added scripts to fetch, preprocess, split training data with `python run_preprocess.py` 
+- Used the trained model to generate song recommendation for user queries with python -m usage. `python run_implementation.py -p <Path_of_folder_with_saved_model>
+
+## Note
+This work is for educational and research purposes. All credits for the original idea and architecture go to the paper authors.
+
+
+# JAM Reproduction
+
 # :jar: :cherries: JAM - Just Ask for Music  
 ### Multimodal and Personalized Natural Language Music Recommendation
 
@@ -10,15 +45,17 @@
 
 ### Environment
 
-- Install the environment with
-  `conda env create -f jam.yml`
-- Activate the environment with `conda activate jam`
+- Python used `3.10.20`
+- Install the environment with `python -m venv .venv`
+- Activate the environment on windows with `.venv/Scripts/Activate.ps1`
+- Install all dependies with `pip install -r requirements.txt`
 
 
 ### Data
 
-- move into the folder of the dataset of your interest
-- run the associated notebooks for the pre-processing and splitting
+- The dataset is saved on zenodo (https://zenodo.org/records/15968495)
+- In order to download the dataset using python run `python data/fetch_data`
+- run the associated files for the pre-processing with `python data\preprocess_data` and splitting `python data\split_data`
 - a folder `processed` should have the following files (/ indicates or):
     - <train/val/test>_split.tsv
     - <user/item>_idxs.tsv
@@ -41,6 +78,7 @@ The framework will take care of:
 - Training/Validating (optionally Testing) the model
 - Saving the best model and configuration
 - Log results to W&B
+
 ### Running a Single Experiment
 A single experiments can be 1) `train/val` + `test` 2) `train/val` 3) just `test`
 
@@ -71,7 +109,7 @@ running_settings:
   batch_verbose: True
 ```
 then run
-`python run_experiment.py -a basematching -d amazon23office -c conf/confs/test_conf.yml`
+`python run_experiment.py -a basematching -d zenodo -c conf/confs/test_conf.yml`
 (if `-t` is not specified, it will run `train/val/test`)
 
 
@@ -144,89 +182,6 @@ Playlist | 3,978               | item_idxs        | ISRC code of each item in th
 
 The dataset provides information of 3,978 playlists consisting of 99,865 unique items matched with 112,337 unique queries of 103,752 users.
 
-### Retrieving Metadata of Songs
-
-With the ISRC it is possible to fetch metadata (song title and artist name) of each music track:
-
-```
-# Imports
-from bs4 import BeautifulSoup
-from urllib.request import Request, urlopen
-import re
-
-
-def get_metadata(id_isrc: str):
-    # Construct url to retrieve metadata.
-    url = f"https://musicbrainz.org/isrc/{id_isrc}"
-    
-    # Get html page.
-    req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-    html_page = urlopen(req).read()
-    soup = BeautifulSoup(html_page, 'html.parser')
-    
-    # Get data
-    song_title = "Undefined"
-    artist_name = "Undefined"
-    
-    try:
-        entry = soup.find_all(class_="odd")[0]
-        fields = entry.find_all(['td', 'th'])
-        data = [cell.get_text(strip=True) for cell in fields]
-        song_title = data[0]
-        artist_name = data[1]
-    except:
-        print("Error while retrieving data")
-     
-    return song_title, artist_name
-
-```
-
-# User Study for Generated Queries
-
-- We also performed a user survey to assess the quality of  300 generated user long queries in a Likert-5 scale (1:Strongly Dissagree, 2:Disagree, 3:Neutral, 4:Agree, 5:Strongly Agree). Each query was evaluated by 2 distinct survey participants.
-    ![](assets/dist_ans.png)
-    | Results        |              |
-    |---------------|-------:|
-    | Unique Participants | 15
-    | Total Labels | 600 |
-    | Numeric Label (mean / std / median)| 3.54 /  1.17 / 4.0 |
-  
--  The mean label value **3.54** indicates a positive perception of the quality of the generated queries.     
-
-- In order to assess the paired agreement of the labels, we performed an statistical significance test between the two groups of labels, namely, a t-test was performed assuming independant (`ttest_ind`) and related (`ttest_rel`) samples.
-    |**Test Results**      |`ttest_ind`|`ttest_rel`|
-    |-------|:---------:|:---------:|
-    |*p-value*| 0.5095|0.3362 |
-    |*statistic*|0.6599  |0.9832 |
-- With the resulting p-values we are not able to reject the null hypotesis, therefore, the two label groups hold similar distributions.  
-<!-- {'total_labels': 600,
- 'summary_answers': {'Strongly Disagree': 34,
-                     'Disagree': 108,
-                     'Neutral': 84,
-                     'Agree': 245,
-                     'Strongly Agree': 129},
- 'numeric_score': {'min': 1,
-                   'max': 5,
-                   'mean': '3.54',
-                   'std': '1.17',
-                   'median': '4.0'}} -->
-
-
-## Cite
-
-If you use this work, please cite our RecSys 2025 paper:
-
-```bibtex
-@inproceedings{melchiorre2025jam,
-  title     = {Just Ask for Music (JAM): Multimodal and Personalized Natural Language Music Recommendation},
-  author    = {Alessandro B. Melchiorre and Elena V. Epure and Shahed Masoudian and Gustavo Escobedo and Anna Hausberger and Manuel Moussallam and Markus Schedl},
-  booktitle = {Proceedings of the 19th ACM Conference on Recommender Systems (RecSys)},
-  year      = {2025},
-  address   = {Prague, Czhech Republic},
-  note      = {Short Paper},
-  publisher = {ACM},
-}
-```
 
 ## License
 
