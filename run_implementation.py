@@ -19,7 +19,7 @@ class JAMRecommender:
 
         # ===== Load Model =====
         self.model = AverageQueryMatching.build_from_conf(conf, dataset, feature_holder)
-        self.model.load_state_dict(torch.load(model_path, map_location=device))
+        self.model.load_state_dict(torch.load(model_path, map_location=device, weights_only=True))
         self.model.to(device)
         self.model.eval()
 
